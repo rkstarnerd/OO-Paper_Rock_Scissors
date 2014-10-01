@@ -26,12 +26,14 @@ class Computer
 end
 
 class Rock_Paper_Scissors
-  attr_accessor :choice, :name
-  attr_reader :computer_choice
+  attr_accessor :choice, :name, :player
+  attr_reader :computer_choice, :computer
   OPTIONS = { 'P' => 'Paper', 'R' => 'Rock', 'S' => 'Scissors' }
   def initialize
     puts "\t\tLet's play Rock-Paper-Scissors!\n\t\tPlayer 1, Enter your name: "
     @name = gets.chomp.capitalize
+    @player = Player.new(name)
+    @computer = Computer.new
     puts "\t\tChoose one: (P/R/S)"
   end
 
@@ -47,29 +49,27 @@ class Rock_Paper_Scissors
   end
 
   def run
-    player = Player.new(name)
     player.choose
-    computer = Computer.new
     computer.choose
-    who_won?(choice, computer_choice)
-    #binding.pry
+    who_won?(@choice, @computer_choice)
+    # => binding.pry
     play_again?
   end
 
   def who_won?(choice, computer_choice)
-    if choice == computer_choice
+    if @choice == @computer_choice
       puts "\t\tYou tied!"
-    elsif ((choice == 'P') && (computer_choice == 'R'))
+    elsif ((@choice == 'P') && (@computer_choice == 'R'))
       puts "\t\tPaper Wraps Rock!\n You won!"
-    elsif ((choice == 'P') && (computer_choice == 'S'))
+    elsif ((@choice == 'P') && (@computer_choice == 'S'))
       puts "\t\tScissors cut Paper!\nWomp! You lost!"
-    elsif ((choice == 'R') && (computer_choice == 'P'))
+    elsif ((@choice == 'R') && (@computer_choice == 'P'))
       puts "\t\tPaper Wraps Rock!\nWomp! You lost!"
-    elsif ((choice == 'R') && (computer_choice == 'S'))
+    elsif ((@choice == 'R') && (@computer_choice == 'S'))
       puts "\t\tRock Crushes Scissors!\n You won!"
-    elsif ((choice == 'S') && (computer_choice == 'P'))
+    elsif ((@choice == 'S') && (@computer_choice == 'P'))
       puts "\t\tScissors Cut Paper!\n You won!"
-    elsif ((choice == 'S') && (computer_choice == 'R'))
+    elsif ((@choice == 'S') && (@computer_choice == 'R'))
       puts "\t\tRock Crushes Scissors!\n Womp! You lost!"
     end
   end
