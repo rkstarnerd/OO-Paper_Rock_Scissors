@@ -49,10 +49,10 @@ class Rock_Paper_Scissors
   end
 
   def run
-    player.choose
-    computer.choose
+    @player.choose
+    @computer.choose
     who_won?(@choice, @computer_choice)
-    # => binding.pry
+    #binding.pry
     play_again?
   end
 
