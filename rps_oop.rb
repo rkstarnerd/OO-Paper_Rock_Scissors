@@ -1,5 +1,3 @@
-require 'pry'
-
 class Player
   attr_accessor :choice, :name
   def initialize(name)
@@ -15,26 +13,27 @@ class Player
 end
 
 class Computer
-  attr_reader :computer_choice
+  attr_reader :choice
   def initialize
   end
 
   def choose
-    @computer_choice = Rock_Paper_Scissors::OPTIONS.keys.sample
-    puts "\t\tThe computer chose #{Rock_Paper_Scissors::OPTIONS[@computer_choice]}"
+    @choice = Rock_Paper_Scissors::OPTIONS.keys.sample
+    puts "\t\tThe computer chose #{Rock_Paper_Scissors::OPTIONS[@choice]}"
   end
 end
 
 class Rock_Paper_Scissors
-  attr_accessor :choice, :name, :player
-  attr_reader :computer_choice, :computer
+  attr_accessor :name, :player
+  attr_reader :computer
+
   OPTIONS = { 'P' => 'Paper', 'R' => 'Rock', 'S' => 'Scissors' }
+  
   def initialize
     puts "\t\tLet's play Rock-Paper-Scissors!\n\t\tPlayer 1, Enter your name: "
     @name = gets.chomp.capitalize
     @player = Player.new(name)
     @computer = Computer.new
-    puts "\t\tChoose one: (P/R/S)"
   end
 
   def play_again?
@@ -49,27 +48,27 @@ class Rock_Paper_Scissors
   end
 
   def run
-    @player.choose
-    @computer.choose
-    who_won?(@choice, @computer_choice)
-    #binding.pry
+    puts "\t\tChoose one: (P/R/S)"
+    player.choose
+    computer.choose
+    who_won?
     play_again?
   end
 
-  def who_won?(choice, computer_choice)
-    if @choice == @computer_choice
+  def who_won?
+    if player.choice == computer.choice
       puts "\t\tYou tied!"
-    elsif ((@choice == 'P') && (@computer_choice == 'R'))
+    elsif ((player.choice == 'P') && (computer.choice == 'R'))
       puts "\t\tPaper Wraps Rock!\n You won!"
-    elsif ((@choice == 'P') && (@computer_choice == 'S'))
+    elsif ((player.choice == 'P') && (computer.choice == 'S'))
       puts "\t\tScissors cut Paper!\nWomp! You lost!"
-    elsif ((@choice == 'R') && (@computer_choice == 'P'))
+    elsif ((player.choice == 'R') && (computer.choice == 'P'))
       puts "\t\tPaper Wraps Rock!\nWomp! You lost!"
-    elsif ((@choice == 'R') && (@computer_choice == 'S'))
+    elsif ((player.choice == 'R') && (computer.choice == 'S'))
       puts "\t\tRock Crushes Scissors!\n You won!"
-    elsif ((@choice == 'S') && (@computer_choice == 'P'))
+    elsif ((player.choice == 'S') && (computer.choice == 'P'))
       puts "\t\tScissors Cut Paper!\n You won!"
-    elsif ((@choice == 'S') && (@computer_choice == 'R'))
+    elsif ((player.choice == 'S') && (computer.choice == 'R'))
       puts "\t\tRock Crushes Scissors!\n Womp! You lost!"
     end
   end
